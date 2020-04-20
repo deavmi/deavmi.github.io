@@ -1,0 +1,146 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>Bester: A pluggable message-exchange protocol</title>
+  </head>
+  <body bgcolor="#cccccc" link="#0000EE" alink="#EE0000" vlink="#551A8B">
+    <div align="center"><img
+        src="https://avatars0.githubusercontent.com/u/5207740?s=460&amp;v=4"
+        alt="My face from GitHub (photo by Risima Ngobe)" height="143"
+        width="143"><br>
+      <h1>Tristan B. Kildaire</h1>
+      <p><i>"My brain is big but I still failed Applied 144 for the
+          second time"</i> ~Deavmi 2020<br>
+      </p>
+      <hr size="2" width="100%">
+      <h3><br>
+      </h3>
+      <h1>Bester: A pluggable message-exchange protocol (Part 1)<br>
+      </h1>
+      <h3>20th April 2020</h3>
+      <p><br>
+      </p>
+    </div>
+    <div align="left">
+      <h3>Introduction<br>
+      </h3>
+      I had enough time, during lockdown, to actually start on some of
+      the ideas I had been wanting to start on for quite some time. I
+      had an idea of something along the lines of XMPP but more <i>generalised</i>.
+      Now I say it in italics because XMPP can actually and is used in a
+      general sense, like for IoT devices - atleast one of the available
+      XMPP daemons, I believe ejabberd, advertised itself as that once.
+      For me though I wanted my own version and I guess as simple as
+      possible - once again I have not read the XMPP specification so I
+      think I might just be on par with it. Anyways, the point is I
+      wanted my own version of it, now... what <b>is</b> it?<br>
+    </div>
+    <div align="left"><br>
+    </div>
+    <div align="left">
+      <h3>A worked example to explain it<br>
+      </h3>
+      So the idea behind the bester protocol is that by itself it is
+      pretty useless except for a few built-in commands for admin but
+      those don't really <b>do</b> anything. The idea behind bester is
+      that two users let's call them G and T, because Alice and Bob is
+      overused (and Eve is the weird dude that hangs out in NARGA H in
+      the evenings). So we have a user named <b>G</b> and a user named
+      <b>T</b>, <b>G</b> is connected to server <b>J</b> and so is <b>T</b>
+      (as shown below):<br>
+    </div>
+    <div align="left"><br>
+    </div>
+    <div align="center"><img src="bester_images/1.png" alt="T speaking
+        to G through J" height="276" width="448"><br>
+    </div>
+    <div align="left"><br>
+    </div>
+    <div align="left">Now let's say that <b>G</b> and <b>T</b> both
+      have some sort of protocol they know how to speak, perhaps it's
+      Afrikaans. Now, if <b>T</b> wants to send something encoded in
+      the <i>Afrikaans protocol</i>, to <b>G</b>, then you would
+      expect, in such a server-client model, for the server, <b>J</b>,
+      itself to understand what the protocol is <b>too!</b> This is
+      where the difference with bester comes in, as compared to say now
+      using WhatsApp. In the WhatsApp scenario, that server <b>J</b>,
+      would also need to understand the <i>Afrikaans protocol</i>. With
+      bester, the <b>server</b> doesn't need to understand it <b><i>but</i></b>
+      there must be something then surely that does? Say hello to the <i>message
+        handler</i>!</div>
+    <div align="left"><br>
+    </div>
+    <div align="center"><img src="bester_images/2.png" alt="The message
+        handler" height="211" width="587"><br>
+    </div>
+    <div align="left"><br>
+      Every message that follows the bester protocol <b>must</b>
+      include a <i>type field</i>, this indicates to the server, <b>J</b>,
+      which sub-protocol this message is encoded with and to which <i>messgage
+        handler</i> the message should be dispatched to. In this case we
+      can call the little message handler, <b>S</b> (this one's pretty
+      ambigious). When <b>J</b> was setup, the server administrator
+      made sure that his bester server could handle <i>Afrikaans </i>messages
+      so therefore the server <b>J</b> will forward the message sent
+      from <b>T</b> to <b>J</b>. The handler can do really anything it
+      wants in its own space, it runs as a seperate process and
+      communicates with the server over local IPC via a UNIX domain
+      socket.<br>
+    </div>
+    <div align="left"><br>
+      <div align="center"><img src="bester_images/3.png" alt="The
+          message handler, S, exchanging a message and message-response
+          with the server J" height="258" width="636"><br>
+      </div>
+      <br>
+      Once the processing is done by the message handler <b>S</b>, then
+      there are a few things that can happen. One for sure is that <b>S</b>
+      must send s response, back to <b>J</b> who is waiting for one.
+      This response contains a few built-in commands that can tell the
+      server, <b>J</b>, what to do with the message that <b>S</b>
+      created in reply to <b>J</b> passing on the <i>Afrikaans</i>
+      message from <b>T</b> to it. These commands basically boil down
+      to whether the generated message (by <b>S</b>) should be sent
+      back to clients connected to the server <b>J</b> or if it should
+      be sent to other servers (we will get to this in a moment).<br>
+    </div>
+    <div align="left"><br>
+      So the idea is that <b>J</b> will receive messages and send back
+      replies to either clients or forward to another server (not
+      discusses yet). The fact that <b>T</b> was able to get the server
+      to send the message encoded in the <i>Afrikaans protocol</i>
+      wasn't because the server <b>J</b> understood <i>Afrikaans</i>
+      but rather because it knows two built-in commands <b>sendClients</b>
+      and <b>send</b><b>Servers</b> which are for sending the payload
+      generated by the message handler for <i>Afrikaans</i>, <b>S</b>.
+      <b>S</b> would have seen that within the <i>Afrikaans protocol</i>
+      (because it understands it just like <b>T</b> and <b>G</b> do)
+      there is a field that says who the message must be sent to and
+      because of this, <b>S</b> can process the message it received,
+      generate a new one (a response) and command the server <b>J</b>
+      (who can't speak or understand <i>Afrikaans</i>) to use the <b>sendClients</b>
+      command to forward it to the correct client attached to the local
+      server <b>J</b>, in this case, client <b>G</b>.<br>
+    </div>
+    <div align="left"><br>
+      So to make it clear, all the server knows is how to receive
+      messages from clients, where to process them (done by the message
+      handler), and then two commands that can be used by the message
+      handler's generated message to command the server where to send
+      its generated response.<br>
+    </div>
+    <div align="left"><br>
+    </div>
+    <div align="center"><img src="bester_images/4.png" alt="T sending an
+        Afrikaans protocol message to G through server J which handles
+        the Afrikaans sub-protocol by exchanging messages with message
+        handler S" height="479" width="610"></div>
+    <div align="left"><br>
+      For now that is all, I will be writing on how server-to-server (so
+      think <b>sendServers</b>) communication works and with a worked
+      example too, in the next blog post.<br>
+    </div>
+  </body>
+</html>
