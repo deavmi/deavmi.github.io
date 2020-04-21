@@ -1,0 +1,166 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>Bester: Progress report</title>
+  </head>
+  <body bgcolor="#cccccc" link="#0000EE" alink="#EE0000" vlink="#551A8B">
+    <div align="center"><img
+        src="https://avatars0.githubusercontent.com/u/5207740?s=460&amp;v=4"
+        alt="My face from GitHub (photo by Risima Ngobe)" height="143"
+        width="143"><br>
+      <h1>Tristan B. Kildaire</h1>
+      <p><i>"My brain is big but I still failed Applied 144 for the
+          second time"</i> ~Deavmi 2020<br>
+      </p>
+      <hr size="2" width="100%">
+      <h3><br>
+      </h3>
+      <h1>Bester: Progress report<br>
+      </h1>
+      <h3>21th April 2020</h3>
+      <p><br>
+      </p>
+    </div>
+    <div align="left">
+      <h3>Introduction<br>
+      </h3>
+      As a break from writing the next post on Bester and how it can be
+      used in server-to-server contexts I decided a little, more
+      technical, progress report was due.<br>
+      <br>
+    </div>
+    <div align="left">
+      <div align="left">
+        <h3>Adding multiple listeners<br>
+        </h3>
+        Something I wanted to add badly and have as a nice little extra
+        feature, not something that was inherent to the bester protocol
+        itself, was to add support for IPv6 to the bester daemon.
+        Therefore last night, after most of my university work had been
+        completed I decided that it was time to slightly refactor the
+        way the server listened for incoming connections. Instead of the
+        <i>accept-and-dispatch</i> loop being a part of the <font
+          face="Courier New, Courier, monospace">BesterServer</font>
+        class I decided that that class should, yes, still be the
+        central point of coordination in terms of keeping track of <b>all</b>
+        connections but that connections should be appended to the <font
+          face="Courier New, Courier, monospace">BesterConnection[]</font>
+        array via the listeners that were running. I wanted to allow the
+        user to be able to let their server, if they wanted to, be able
+        to bind to TCP over IPv4 along with binding to TCP over IPv6 as
+        well and even, maybe, UNIX domain sockets!<br>
+      </div>
+      <div align="left"><br>
+        The way I worked this out in the code was by creating a class
+        named <font face="Courier New, Courier, monospace">BesterListener</font>
+        which ran on its own thread and had an already implemented
+        connection <i>accept-and-dispatch</i> loop for dispatching new
+        connections to <font face="Courier New, Courier, monospace">BesterConnection</font>
+        thread objects. Then for implementing specific protocols like
+        TCP over IPv4 or over IPv6 or using UNIX domain sockets, all I
+        did was to create several other classes that extended the <font
+          face="Courier New, Courier, monospace">BesterListener</font>
+        class and justset the super-class's <font face="Courier New,
+          Courier, monospace">socket</font> object to the one created
+        for that specific protocol.<br>
+        <div align="left"><br>
+          And it worked like a charm!<br>
+        </div>
+        <div align="left"><br>
+          The configuration for something like this looks like this in <font
+            face="Courier New, Courier, monospace">server.conf</font>:<br>
+        </div>
+        <div align="left">&nbsp; <br>
+          <pre>&nbsp;&nbsp; network" : {</pre>
+          <pre>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;"types" : ["unix", "tcp4", "tcp6"],</pre>
+          <pre>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;"unix" : {</pre>
+          <pre>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;"address" : "besterUNIXSock"</pre>
+          <pre>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;},</pre>
+          <pre>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;"tcp4" : {</pre>
+          <pre>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;"port" : "2220",</pre>
+          <pre>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;"address" : "0.0.0.0"</pre>
+          <pre>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;},</pre>
+          <pre>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;"tcp6" : {</pre>
+          <pre>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;"port" : "2221",</pre>
+          <pre>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;"address" : "::"</pre>
+          <pre>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;}</pre>
+          <pre>&nbsp;&nbsp; &nbsp;}</pre>
+        </div>
+        <div align="left"><br>
+          So all you need to do is specify that you want certain socket
+          types and then just provide their binding informations.<br>
+          <br>
+        </div>
+        <div align="left">
+          <h3>A new addition to the <font face="Courier New, Courier,
+              monospace">sendClients</font> and <font face="Courier
+              New, Courier, monospace">sendServers</font> response
+            commands<br>
+          </h3>
+          As I was discussing bester with a friend of mine, he
+          indirectly gave me an idea for something interesting I wanted
+          to implement. Normally if a user wants to get some processing
+          done by a handler, we currently have it working as follows.
+          Client sends a message to the server, server gets it and
+          dispatches it to the message handler. The only part that we
+          haven't done is handling of the reply that the server receives
+          back from the message handler. We have the reply working in
+          that it comes back but we haven't done much with regards to
+          that. So <font face="Courier New, Courier, monospace">sendClient</font>
+          and <font face="Courier New, Courier, monospace">sendServer</font>
+          are essentially not implemented. But in the example where say
+          now a user wants a message <b>A</b> to be processed by a
+          handler for <b>messageType1</b> but then wants the response
+          it gets back from the handler (indirectly via the server) to
+          be processed again by another handler, then the user must send
+          another message (the processed one, back). Now, I don't mind
+          this and of course you can still do this after the next
+          feature I am going to mention gets implemented, but the thing
+          I was thinking of doing was implementing a command named <font
+            face="Courier New, Courier, monospace">sendHandler</font>,
+          which means after the server received a message from the
+          client and dispatched it to the <b>messageType1</b> message
+          handler that it (the handler) can then generate a response
+          message that commands the server to push that message to
+          another handler and then somewhere down the line the server
+          gets a response with a command that is not <font
+            face="Courier New, Courier, monospace">sendHandler</font>
+          and the message ends back at a client or another server (<b>sendClients</b>
+          and <b>sendServers</b> respectively).<br>
+        </div>
+        <div align="left"><br>
+          <h3>Take it for a run yourself!<br>
+          </h3>
+          All you have to do is clone the repository (<a
+            href="https://github.com/besterprotocol/besterd">here</a>)
+          and then <font face="Courier New, Courier, monospace">cd</font>
+          into and run the following.<br>
+        </div>
+        <div align="left"><br>
+          Firstly <font face="Courier New, Courier, monospace">cd
+            testing/</font> and then run <font face="Courier New,
+            Courier, monospace">python3 unixSock.py</font>, this starts
+          a bogus message handler. Now, start the bester daemon by
+          running <font face="Courier New, Courier, monospace">dub</font>,
+          and then lastly run a client example code by running <font
+            face="Courier New, Courier, monospace">cd testing</font> and
+          <font face="Courier New, Courier, monospace">python3
+            testSuite.py</font>!<br>
+        </div>
+        <div align="left"><br>
+          You should see some output!<br>
+        </div>
+        <div align="left"><br>
+        </div>
+        <div align="left"><br>
+        </div>
+        <div align="left"><i>And that's all for now!</i><br>
+        </div>
+        <br>
+        <br>
+      </div>
+    </div>
+  </body>
+</html>
