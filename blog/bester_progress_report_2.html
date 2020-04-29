@@ -1,0 +1,240 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>Bester: Progress report (again)</title>
+  </head>
+  <body bgcolor="#cccccc" link="#0000EE" alink="#EE0000" vlink="#551A8B">
+    <div align="center"><img
+        src="https://avatars0.githubusercontent.com/u/5207740?s=460&amp;v=4"
+        alt="My face from GitHub (photo by Risima Ngobe)" height="143"
+        width="143"><br>
+      <h1>Tristan B. Kildaire</h1>
+      <p><i>"My brain is big but I still failed Applied 144 for the
+          second time"</i> ~Deavmi 2020<br>
+      </p>
+      <hr size="2" width="100%">
+      <h3><br>
+      </h3>
+      <h1>Bester: Progress report (again)<br>
+      </h1>
+      <h3>29th April 2020</h3>
+      <p><br>
+      </p>
+    </div>
+    <div align="left">
+      <h3>Introduction<br>
+      </h3>
+      I have another post still due with regards to Bester's sendServers
+      and sendHandler commands but because that will take some time to
+      write up I decided I would make a progress update as the
+      specification for those functions is not complete (it changes as I
+      code, and yes a final post will be made once the specification is
+      stable). Anyways, let's get into it!</div>
+    <div align="left"><br>
+      <div align="left">
+        <h3>Working message handlers<br>
+        </h3>
+        The whole flow of client to server, server to handler, handler
+        to server and server to client (as described in the <a
+          href="blog/bester_1.html">introduction to Bester post</a>) has
+        been implemented and tests exist to test that functionality out.
+        You can now have a client <b>T</b> send a message of type <b>S</b>
+        to the server <b>J</b> and the handler for <b>S</b>-type
+        messages will handle the message. <b>S</b> will do what it
+        needs to and then, over a UNIX domain socket, transfer its
+        response back to the server, <b>J</b>. Another little change to
+        mention is that upon connecting to the handler we open a new
+        connection to it each time, instead of the previous mechanism
+        that connected on startup and used that socket for <b>all</b>
+        messages of type <b>S</b>. Anywho, when server <b>J</b> has
+        gotten a response back from <b>S</b> it will then see what the
+        command is, these are sendHandler, sendServers and sendClient.
+        For what I am speaking about it is sendClient we are interested
+        in. The whole flow as described in the beginning works and the
+        server will check the list of provided clients (from the message
+        handler's response message) and send the payload of the message
+        handler to each of those users.<br>
+      </div>
+      <div align="left"><br>
+        <h3>Early working scope "server" (server-to-server)<br>
+        </h3>
+        A small little mention (rather big in my opinion) is that we now
+        have a working server-to-server handling mechanism in response.d
+        (which handles sendClients, sendServers and (soon) sendHandler),
+        in fact the images you see later are of that all working (which
+        also implies a working message handler system, as described
+        above).<br>
+        <br>
+        <h3>Exceptions everywhere and code clean up<br>
+        </h3>
+        It is worth the mention that exception handling is making its
+        way into the codebase. For example, a failure to send to on of
+        the clients in the scenario mentioned above will not break the
+        whole response-handling mechanism but rather skip to the next
+        client and attempt sending to it. It is quite shoddy right now
+        but that is just to have it in a non-breakable state. There will
+        come a time, I think in probably a month's time whereby code
+        clean up can be done.<br>
+      </div>
+      <div align="left"><br>
+        Speaking of code clean up, a lot has been done to abstract and
+        modularise everything. Most message handling code is now part of
+        the "handlers" package and the entry point of through a
+        MessageHandler object. Things will continue to follow this OOP
+        design pattern till I am satisfied with the code hiding such
+        that each module only calls external functions in those other
+        mdules and the code in each module is solely related to the
+        module itself - not another module.<br>
+      </div>
+      <div align="left"><br>
+        <h3>Some photos of it working<br>
+        </h3>
+        To wrap up this post I think sharing the latest screenshots of
+        it working would be a good idea.<br>
+        <br>
+      </div>
+      <div align="left"><br>
+        <div align="center"><img
+            src="bester_prototype/client_a_server_1.png" alt=""
+            height="667" width="1185"><br>
+        </div>
+        <div align="center"><br>
+          <font size="+2">Client A -&gt; Server B</font><br>
+        </div>
+        <div align="center"><br>
+          What you see above is a client <b>A</b> connected to a server
+          <b>B</b>, and the right-hand side pane is client <b>A</b>
+          authenticated with<br>
+          the server and sending a message to it (of type "type1"). The
+          output of the constructed is then printed below it.<br>
+        </div>
+        <div align="center"><br>
+        </div>
+        <div align="center"><br>
+        </div>
+        <div align="center"><br>
+        </div>
+        <div align="center"><br>
+        </div>
+        <div align="center"><br>
+        </div>
+        <div align="center"><br>
+        </div>
+        <div align="center"><br>
+          <img src="bester_prototype/server_1_handler.png" alt=""
+            height="663" width="1179"><br>
+        </div>
+        <div align="center"><br>
+        </div>
+        <div align="center"><font size="+2"><font size="+2">Server B
+              -&gt; Handler C</font></font><br>
+          <div align="center"><br>
+            What you see here is handler <b>C</b> receiving the message
+            that was sent from client <b>A</b> to the server <b>B</b>.
+            It<br>
+            has now been dispatched to the message handler <b>C</b>
+            which has now printed out that received message.</div>
+          <div align="center"><br>
+          </div>
+          <div align="center"><br>
+          </div>
+          <div align="center"><br>
+          </div>
+          <div align="center"><br>
+          </div>
+          <div align="center"><br>
+          </div>
+          <div align="center"><br>
+          </div>
+          <div align="center"><br>
+            <img src="bester_prototype/server_1_handler_response.png"
+              alt="" height="657" width="1169"><br>
+            <div align="center"><font size="+2"><br>
+              </font><font size="+2">Server B -&gt; Handler C -&gt;
+                Server B</font><br>
+              <div align="center"><br>
+                What you now see is the response that the message
+                handler <b>C</b> had sent to Server <b>B</b> when
+                server <b>B</b> sent client <b>A</b>'s
+                <div align="center">payload to the server. The command
+                  here is clearly (near the bottom of the terminal)
+                  stated to be sendServers and</div>
+                <div align="center">it contains one server to send to,
+                  namely "10.0.0.4" on port "2223".</div>
+              </div>
+              <div align="center"><br>
+              </div>
+              <div align="center"><br>
+              </div>
+              <div align="center"><br>
+              </div>
+              <div align="center"><br>
+              </div>
+              <div align="center"><br>
+              </div>
+              <div align="center"><br>
+              </div>
+              <div align="center"><br>
+                <img src="bester_prototype/message_handler_server2.png"
+                  alt="" height="679" width="1208"><br>
+                <font size="+2"> </font><font size="+2"><br>
+                  Server B -&gt; Server D -&gt; Handler E</font><br>
+                <div align="center"><br>
+                  What has happened now is that the sendServers command
+                  from server <b>C</b> has come into affect and
+                  transferred the<br>
+                  response payload form handler <b>C</b> to server <b>D</b>,
+                  the received payload has the "scope" field set to
+                  "server" and hence<br>
+                  no authentication needs to take place. The same
+                  handling steps however do occur, therefore the payload
+                  has a "type"<br>
+                  field which will be used on server <b>D</b> to direct
+                  the message to the corresponding handler which in this
+                  case is handler<br>
+                  <b>E</b>, which you can see here above has received
+                  the payload.<br>
+                </div>
+                <div align="center"><br>
+                </div>
+                <div align="center"><br>
+                </div>
+                <div align="center"><br>
+                </div>
+                <div align="center"><br>
+                </div>
+                <div align="center"><br>
+                </div>
+                <div align="center"><br>
+                </div>
+                <div align="center"><br>
+                  <font size="+2"><img
+                      src="bester_prototype/server_2_handler_response.png"
+                      alt="" height="679" width="1208"><br>
+                  </font></div>
+                <div align="center"><font size="+2"><br>
+                    Handler E -&gt; Server D</font><br>
+                  <div align="center"><br>
+                    Clearly this is a work in progress and the message
+                    that handler <b>E</b> generates is not what the
+                    server expects, I<br>
+                    have a few of these kinks that need working on (as a
+                    result from not having a solid specification yet).</div>
+                </div>
+                <br>
+              </div>
+              <div align="center"><br>
+              </div>
+            </div>
+          </div>
+          <div align="center"><br>
+          </div>
+        </div>
+        <div align="left"><br>
+          <br>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
