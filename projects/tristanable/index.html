@@ -54,9 +54,11 @@
         </tbody>
       </table>
       <br>
+      <h3>What is it though?<br>
+      </h3>
       <b>Tristanable</b> is a library I created, like <b>bformat</b>,
-      to ease the devlopment of a lot of projects I<br>
-      am working on during this time that require similiar baseline
+      to ease the development of a lot of projects I<br>
+      am working on during this time that require similar baseline
       protocols to work. In the case<br>
       of the former, I wanted a library that would solve the problem as
       described below (this is by<br>
@@ -64,15 +66,15 @@
       <br>
       So you first have a client and a server. The client sends jobs to
       the server and the server then<br>
-      executes them on seperate threads, sending back a reply for the
+      executes them on separate threads, sending back a reply for the
       job completed. Now a job<br>
       entails the client sending something to the server, the server
       doing some work for that job on<br>
-      a seperate thread and then sending that reply back to the client.
+      a separate thread and then sending that reply back to the client.
       The jobs, in this example, are<br>
-      independant of each other, so the order you send them in and get
+      independent of each other, so the order you send them in and get
       their results back doesn't matter<br>
-      bbut you just have to get, in this case, the two of them back.<br>
+      but you just have to get, in this case, the two of them back.<br>
       <br>
       Here is the performance problem that occurs, say now performing
       job 1, the first send-work-reply<br>
@@ -98,8 +100,8 @@
       example) would immediately send the job 2 result back, and when it
       receives the results for job 2 back<br>
       it then will let any blocking call to receive(tagID) through. So
-      we would implememt this with a thread<br>
-      per job on the client side - making the seperate blocking calls
+      we would implement this with a thread<br>
+      per job on the client side - making the separate blocking calls
       possible - concurrently but the one job<br>
       that takes an hour will not hold ours up for an hour and a little
       bit - job 2's thread handler can receive its<br>
