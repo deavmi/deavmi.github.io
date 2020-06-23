@@ -45,9 +45,57 @@
         </tbody>
       </table>
       <br>
+      <b>Tristanable</b> is a library I created, like <b>bformat</b>,
+      to ease the devlopment of a lot of projects I<br>
+      am working on during this time that require similiar baseline
+      protocols to work. In the case<br>
+      of the former, I wanted a library that would solve the problem as
+      described below (this is by<br>
+      far the best way I can describe the use of this project):<br>
       <br>
+      So you first have a client and a server. The client sends jobs to
+      the server and the server then<br>
+      executes them on seperate threads, sending back a reply for the
+      job completed. Now a job<br>
+      entails the client sending something to the server, the server
+      doing some work for that job on<br>
+      a seperate thread and then sending that reply back to the client.
+      The jobs, in this example, are<br>
+      independant of each other, so the order you send them in and get
+      their results back doesn't matter<br>
+      bbut you just have to get, in this case, the two of them back.<br>
       <br>
+      Here is the performance problem that occurs, say now performing
+      job 1, the first send-work-reply<br>
+      procedure that occurs, takes 1 hour and only after a blocking
+      receive after that 1 hour can you<br>
+      proceed to then do the next blocking receive (after a send of
+      course) for job 2? You see, we could<br>
+      have gotten job 2 back first whilst job 1 was working (the
+      implication that job one takes significantly<br>
+      less time than job 1). But this implies the server waiting for job
+      1 to complete and then only queuing it<br>
+      to the network buffer for sending and then queuing the server-side
+      finished job 2 to it as well.<br>
       <br>
+      The solution? Well the job context is derived from the state
+      machine implied by the ordering of the<br>
+      socket calls but if we go out of order we then need order again,
+      we can simply tag the messages - <b>this is<br>
+        what tristanable does!<br>
+        <br>
+      </b>Tristanable watches the socket, and in this case the server
+      (upon job completion of job 2 - as per our<br>
+      example) would immediately send the job 2 result back, and when it
+      receives the results for job 2 back<br>
+      it then will let any blocking call to receive(tagID) through. So
+      we would implememt this with a thread<br>
+      per job on the client side - making the seperate blocking calls
+      possible - concurrently but the one job<br>
+      that takes an hour will not hold ours up for an hour and a little
+      bit - job 2's thread handler can receive its<br>
+      results and do what it needs to with them.<br>
+      <b></b><br>
       {TODO}<br>
       <p><br>
       </p>
