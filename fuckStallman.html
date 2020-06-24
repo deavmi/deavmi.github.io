@@ -328,7 +328,109 @@
         refactor, clean up, thread safety, portability, CRXN stuff,
         BonoboNET stuff, ted editor, some more stuff<br>
         [14:42:56] &lt;deavmi&gt; Damn<br>
-        [14:43:00] &lt;deavmi&gt; We're having fun!</font><br>
+        [14:43:00] &lt;deavmi&gt; We're having fun!<br>
+      </font></p>
+    <p><br>
     </p>
+    <h3>Deavmi wants to commit Merriman bridge gravitational
+      acceleration vector test<br>
+    </h3>
+    <font face="Courier New, Courier, monospace">[12:46:36] --&gt;
+      deavmi_ (~tbk@10.1.0.2) has joined #crxn<br>
+      [12:47:01] &lt;deavmi&gt; Sorting out a problem<br>
+      [12:47:06] &lt;deavmi&gt; one pi decided to stop readin sysctl<br>
+      [12:47:13] &lt;deavmi&gt; so now imma have to write s unit to
+      fucking do sysctl -p<br>
+      <b>[12:47:15] &lt;deavmi&gt; linux</b><b><br>
+      </b><b>[12:47:16] &lt;deavmi&gt; amazig</b><br>
+      [12:47:26] &lt;deavmi&gt; all forwarding jjust stopped and I was
+      like the fuck why<br>
+      [12:47:28] &lt;deavmi&gt; out of no where<br>
+      [12:47:33] &lt;deavmi&gt; just decided it isn't gonna apply it
+      anymore<br>
+      [12:47:34] &lt;deavmi&gt; ffs<br>
+      [12:51:12] &lt;deavmi&gt; fuck<br>
+      [12:52:36] &lt;deavmi&gt; fied now<br>
+      [12:52:41] &lt;deavmi&gt; Lmao I repeatedly added it in<br>
+      [12:52:43] &lt;deavmi&gt; Idk what happened<br>
+      [12:52:52] &lt;deavmi&gt; perhaps it failed due to a lag at
+      bringing up an interface<br>
+      [12:52:53] &lt;deavmi&gt; who knows<br>
+      [12:52:59] &lt;deavmi&gt; but that probability is clearly very
+      fucking low<br>
+      [12:53:26] &lt;-- deavmi_ (~tbk@10.1.0.2) has quit (Ping timeout:
+      20 seconds)<br>
+      [12:58:26] &lt;-- deavmi (~tbk@10.1.0.2) has quit<br>
+      [12:58:28] --&gt; deavmi (~tbk@10.1.0.2) has joined #crxn<br>
+      [12:58:28] * Topic for #crxn is "CRXN | Community Run eXpansive
+      Network"<br>
+      [12:58:28] * Topic set by -Server- on 2020-06-24 10:17:28 UTC<br>
+      [12:58:35] *** Mode #crxn +P by lockdown.bnet<br>
+      [12:58:35] * Channel #crxn created on 2020-06-24 10:17:28 UTC<br>
+      [13:00:02] &lt;deavmi&gt; welp<br>
+      [13:00:17] &lt;deavmi&gt; adding a systemd unit with `sysctl -p`
+      (to default read the /etc/sysctl.conf) works<br>
+      [13:00:23] &lt;deavmi&gt; No fucking idea why it is acting up now<br>
+      [13:00:29] &lt;deavmi&gt; But that seemed to work<br>
+      [13:03:13] &lt;-- deavmi (~tbk@10.1.0.2) has quit<br>
+      [13:03:16] --&gt; deavmi (~tbk@10.1.0.2) has joined #crxn<br>
+      [13:03:16] * Topic for #crxn is "CRXN | Community Run eXpansive
+      Network"<br>
+      [13:03:16] * Topic set by -Server- on 2020-06-24 10:17:28 UTC<br>
+      [13:03:21] --&gt; deavmi_ (~tbk@10.1.0.2) has joined #crxn<br>
+      [13:03:23] *** Mode #crxn +P by lockdown.bnet<br>
+      [13:03:23] * Channel #crxn created on 2020-06-24 10:17:28 UTC<br>
+      [13:04:37] &lt;deavmi&gt; I haven't rebooted it in some time<br>
+      [13:04:39] &lt;deavmi&gt; since recent changes<br>
+      [13:04:42] &lt;deavmi&gt; I guess<br>
+      [13:04:50] &lt;deavmi&gt; so perhaps it took to long to bring up
+      eth0 eth1<br>
+      [13:04:51] &lt;deavmi&gt; or rather<br>
+      [13:04:56] &lt;deavmi&gt; not "too long"<br>
+      [13:05:09] &lt;deavmi&gt; but it wasn't up as the kernel executed
+      the sysctl <br>
+      [13:05:24] &lt;deavmi&gt; and therefore it didn't work essentially<br>
+      [13:05:39] &lt;deavmi&gt; or rather systemd starting sysctl and
+      applying those changes to the kernel via procfs<br>
+      [13:06:00] &lt;deavmi&gt; So now with the systemd unit, which only
+      runs when the network is online (and waits 10 seconds), it then
+      applies the sysctl -p<br>
+      [13:06:07] &lt;deavmi&gt; THis is by far the busiest of machines I
+      hav<br>
+      [13:06:10] &lt;deavmi&gt; it does the ckr<br>
+      [13:06:19] &lt;deavmi&gt; for crxn 10.5.0.1 and my 10.6.3.1<br>
+      [13:06:20] &lt;deavmi&gt; so yeah<br>
+      [13:06:26] &lt;deavmi&gt; I also did run babeldon it recently<br>
+      [13:06:29] &lt;deavmi&gt; but rebooted afterwards<br>
+      [13:06:32] &lt;deavmi&gt; so idk<br>
+      [13:06:34] &lt;deavmi&gt; Seems fine now<br>
+      [13:06:44] &lt;deavmi&gt; Defs going with the assumption on slow
+      bring up of interface times<br>
+      [13:06:56] &lt;deavmi&gt; as repeatedly inputting it in that conf
+      file seemed to work in one case<br>
+      [13:06:59] &lt;deavmi&gt; lSo yeah<br>
+      [13:07:01] &lt;deavmi&gt; * So yeah<br>
+      [13:07:21] &lt;deavmi&gt; I mean most of this stuff should be done
+      through systemd anyways because of that factor<br>
+      [13:08:11] &lt;deavmi&gt; I do the tun0 forwarding enabler in
+      systemd unit as well (I actually have to because tun0 doesn't just
+      autoplug itself like physical hardware does, ygg must first start)<br>
+      [13:08:12] &lt;deavmi&gt; anywho<br>
+      [13:08:14] &lt;deavmi&gt; all fixed now<br>
+      [13:10:22] &lt;-- deavmi (~tbk@10.1.0.2) has quit (Eish! Load
+      shedding.)<br>
+      [13:11:35] --&gt; deavmi (~tbk@10.1.0.2) has joined #crxn<br>
+      [13:11:35] * Topic for #crxn is "CRXN | Community Run eXpansive
+      Network"<br>
+      [13:11:35] * Topic set by -Server- on 2020-06-24 10:17:28 UTC<br>
+      [13:11:57] *** Mode #crxn +P by lockdown.bnet<br>
+      [13:11:57] * Channel #crxn created on 2020-06-24 10:17:28 UTC<br>
+      [13:13:19] &lt;= Netsplit between lockdown.bnet and banghoe.bnet.
+      Users quit: deavmi_<br>
+      [13:14:08] &lt;deavmi&gt; what a fucking j o u r n e y<br>
+      [13:15:18] =&gt; Netsplit between lockdown.bnet and banghoe.bnet
+      ended. Users joined: deavmi_<br>
+      [13:15:40] &lt;deavmi&gt; nice</font>
+    <p> </p>
   </body>
 </html>
