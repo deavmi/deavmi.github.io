@@ -1,0 +1,3 @@
+OMEMO keys:
+
+deavmi.university.laptop (dino): 3652fb2eb3c8f5d3e5f5dbdea7e503fbf578b73cf618fec1b70e674bd1719625
