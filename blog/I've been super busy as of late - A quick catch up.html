@@ -1,0 +1,395 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>I've been super busy as of late - A quick catch up</title>
+  </head>
+  <body>
+    <div align="center"><img
+        src="https://avatars0.githubusercontent.com/u/5207740?s=460&amp;v=4"
+        alt="My face from GitHub (photo by Risima Ngobe)" height="143"
+        width="143"><br>
+      <h1>Tristan B. Kildaire</h1>
+      <p><i>"My brain is big but I still failed Applied 144 for the
+          second time"</i> ~Deavmi 2020<br>
+      </p>
+      <hr size="2" width="100%">
+      <h3><br>
+      </h3>
+      <h1>I've been super busy as of late - A quick catch up<br>
+      </h1>
+      <h3>23rd July 2020</h3>
+      <p><br>
+      </p>
+    </div>
+    Damn, it's been a really busy last few months with this whole
+    statist lockdown in South Africa. Now to get the politics out of the
+    way - I hate lockdown but damn has it made me productive. It's in
+    this post that I hope to shed some light on absolutely everything I
+    have been working on in the last few months (which damn has been a
+    lot). I'll be going through a lot of what life has been like here,
+    what my projects have developed into and the new ones I have created
+    and then lastly the side-projects of mine (the physical things) that
+    I have been working on as of late. I'm writing this in the backseat
+    of my parents' car as we drive down to Stellenbosch to my university
+    to pickup the leftover belongings of mine that were left there the
+    day I left home due to the university closing due to the 'rona.<br>
+    <br>
+    <br>
+    <div align="center"><img src="catch_up_1/1.jpg" alt="Photo of me in
+        the backseat of a car" height="301" width="402"><br>
+      <br>
+      Me in the car's backseat (yes, I still don't have a license)<br>
+    </div>
+    <br>
+    <i>So let's get to it then!</i><br>
+    <br>
+    <h3>A life catchup</h3>
+    <p>Life under lockdown sucks, I mean other than it being an
+      infringement on my rights (and no I don't care about the
+      constitution's exceptions made for "disaster management"), it has
+      been really shitty. First of all my birthday will have to be moved
+      possibly because how else are we going to get wine then unless we
+      wait for cunt-worthy regulations (those banning alcahol) to be
+      lifted. The second being that I cannot enjoy campus life as well -
+      this being a centerpiece of what it means to be a part of
+      university culture - this time is stolen from me and I will never
+      get it back - yes, I'm looking at you Stellenbosch Universiteit -
+      y'all really look like damn asses in this situations and it is
+      nothing to be proud of. SO it'ss a whole fuck up from the state
+      level down to the University's administrators which yes can do
+      what they want if they really wanted but their choice was lame -
+      rather have it open in protest. So now we had to go online and
+      have tests online and all of that - now the semester went well - I
+      got good marks and now I'm on holiday <b>but still</b> I would
+      have preferred being on campus this whole time. Now looking back
+      at it, after how productive I have been, oerhaps not - I am
+      conflicted but what I am assured is that the next semester should
+      be on campus - I have gotten my personal project work that I
+      wanted to cpmplete done, so now let me go back - I'll have no
+      benefit that I did above here by being at home, so I think then my
+      above protest can be applied for the next semester - it's valid
+      now!<br>
+    </p>
+    <p>So what did I get up to? Well, a lot of things, CRXN, BonoboNET,
+      Bester, libutterfly, bformat, skoenlapper, Butterflyd and many
+      more! I'll describe a little bit of what I worked on during such a
+      productive time in the next section but first - a weather report.<br>
+    </p>
+    <p>It's been frikken freezing here in Worcester. Damn, the mountain
+      tops were snowy-as-fuck (saf) and it was super cold but it made
+      the inside of the house very nice and cozy so I enjoyed that
+      aspect of it - in front of the fireplace.<br>
+      <br>
+    </p>
+    <div align="center"><img src="catch_up_1/2.png" alt="Photo of my
+        residence desktop screen with firefox, gnome-terminal and
+        quassel irc open" height="510" width="907"><br>
+      <br>
+      Photo of my residence desktop screen with firefox, gnome-terminal
+      and quassel irc open, just<br>
+      after arriving at res.<br>
+    </div>
+    <br>
+    <br>
+    <div align="center"><img src="catch_up_1/3.jpg" alt="Photo of
+        mountain in Pniel" height="722" width="964"><br>
+      <br>
+      Photo of mountains in Pniel (just outside of Stellenbosch)<br>
+    </div>
+    <br>
+    Now that I am back home from collecting my stuff at Stellenbosch,
+    let's get to it (politics time is over).<br>
+    <br>
+    <h3>BonoboNET - the best irc network<br>
+    </h3>
+    Something I have always wanted to do was to setup an IRC network.
+    The main reasons was because it is easy to do and it is a cool thing
+    to have - I mean chat - <b>that's super cool!</b> I had played
+    around with the IRC daemon our network uses, <i>ngircd</i>, a few
+    years prior and it was hella easy to get setup with 3 nodes so from
+    there I knew it would be a doable project in a short amount of time.
+    So I got a few things setup. I setup an original node called <i>corona.bnet</i>,
+    because corona is a meme. That machine had Yggdrasil on it so that
+    it could be reachable on a network other than my home IP subnet
+    (which is unreachable by everyone but me on it (and my family of
+    course)). I got some people to come along and connect but I think
+    that was only later, after I had moved the job from that machine to
+    my new machine - <i>lockdown.bnet</i> (and so we say farewell to
+    corona.bnet - the O.G. BNET node!). That machine stayed in place on
+    my server rack in the form of a Raspberry Pi - then a few users
+    started to come along and join in. Next thing you know, I was
+    starting to get people not just on the network but also peering them
+    server-wise as new nodes onto the network making it an actual
+    network not just a one node (lockdown.bnet here) IRC network.<br>
+    <br>
+    What happened next was what we will call <i>the great split</i>
+    whereby we basically had some folk move over to charybdis (puke mode
+    activated). However, I got some other people to fill their spot
+    server wise - we're still good friends (laughing emoji). So now
+    we're on the node count we were previously with one node more!<br>
+    <br>
+    Setting it up was and still is a very fun past time. It's fun to see
+    the different ways we can make connections with other nodes, whether
+    it be over the regular internet, over CRXN, Yggdrasil or more! It
+    makes thee already interesting topology even more interesting and
+    having something that we can use to communicate that we, the
+    community, put together it very cool!<br>
+    <br>
+    <br>
+    <div align="center"><img src="catch_up_1/4.png" alt="Topology of
+        BonoboNET" height="505" width="714"><br>
+      <br>
+      Topology of BonoboNET<br>
+    </div>
+    <br>
+    <br>
+    So BonoboNET is a very fun project because, as I will mention next
+    with CRXN, it is nice to, once you have an IP internet, have
+    something to actually run on top of it and use it for.<br>
+    <br>
+    <b>If you're interested then following this <a
+        href="/projects/bonobonet">link</a> where you can get connected
+      and also, if you want to join your ngircd server onto the network.</b><br>
+    <br>
+    <h3>CRXN - the best IP inter-network<br>
+    </h3>
+    Something I have been planning for a <b>very long time</b> is to
+    build my own IP inter-network after all of the self-teaching I have
+    done for IP networking and networking in general. I wanted to have
+    something whereby I could setup routing myself, configure the routes
+    then the IP addresses and then the physical aspects like switches
+    and ethernet cables and so on and so on. That came to life during
+    lockdown. I set a day aside to configure my network. I decided I now
+    could put my 3 Raspberry Pis (I now have 5) to good use. I setup the
+    two to both be routers, and placed a switch in between them and then
+    one on either side (so three in total).<br>
+    <br>
+    <br>
+    <div align="center"><img src="catch_up_1/5.jpg" alt="" height="631"
+        width="843"><br>
+      <br>
+      Switch 1 &lt;--&gt; Router 1 (<b>Pi3</b>) &lt;--&gt; Switch 2
+      &lt;--&gt; Router 2 (<b>Pi1</b>) &lt;--&gt; Switch 3<br>
+      The middle node is actually my <i>lockdown.bnet</i> BonoboNET
+      node.<br>
+      <br>
+      <div align="left"><br>
+        You can't see the two switches in the above photo but we will
+        get to them later. So, as I was saying, I went ahead and
+        configured the whole thing. Got subnets assigned both sides (so
+        routes added), enabled forwarding and then placed a machine on
+        either end and did a test ping, and not much to my surprise <b>it
+          worked!</b> (As I had done this before). Now over the time I
+        would come to realize that I need to get other people on this
+        network to make it more interesting.<br>
+        <br>
+        Now, I wanted to get more things and people onto CRXN really
+        badly - so I did what I knew best - <b>spam it everywhere!</b>
+        I first did a test run of using Yggdrasil's Crypto-Key routing,
+        which let's you tunnel traffic from one node to another such
+        that it pops up on the tun0 interface on the destination node's
+        side - ready for accepting into the kernel's networking stack. I
+        did that between a machine of mine and a VM (the final time, as
+        I had done earlier tests but this was a working one - working
+        properly that is). I saw that that was working and then came the
+        first interesting part to the addition of new routes into the
+        inter-network, Chris's IPv6 NETMAPPING router.<br>
+        <br>
+        Chris, TODO add liunk, and I linked up and I added a route on my
+        side for 10.5.0.1/32 to point to his Yggdrasil node so he could
+        do NETMAP-NAT, which would mean he could make the whole of CRXN
+        available, through NAT, on the IPv6 Internet. This means any
+        traffic coming in would be an IPv6 packet that then would strip
+        it into payload and place in in an IPv4 packet with the source
+        IP of 10.5.0.1 and then the destination IP that is a result of
+        the mapping function of getIPv4(IPv6In) - something that Chris
+        defined his side. This is a neat feature to have on the network
+        as now we have every device available and through the best type
+        of NAT - one that allows ra sockets, so instead of port-mapping
+        we have address mapping!<br>
+        <br>
+        After getting the hang f Yggdrasil's CKR I started to get a lot
+        of people on the network by this method (and still have many
+        more who want to join it - so much so I should start thinking
+        about network structuring at this point). Another method I
+        should look to in the future is using CJDNS for this as well -
+        it too has a CKR feature which I can use for those who want to
+        get peered with CJDNS or for the same Yggdrasil peerings I have
+        to have a redundant backup! Another thing that would be nice
+        would be to see Lokinet introducing CKR at some point in time -
+        that would mean I would have 3 methods of tunneling available
+        that I could use for those who lack the other overlay networks
+        or to increase redundancy between existing links.<br>
+        <br>
+        So now for a deep dive into what the network consists of my
+        side, <b>routers</b>, <b>switches</b>, <b>hosts</b> and a lot
+        of <b>wires</b><b>!<br>
+          <br>
+          <br>
+        </b>
+        <div align="center"><b><img src="catch_up_1/16.png" alt="A
+              network map of the whole known CRXN (omitting some
+              personal devices)" height="514" width="667"><br>
+            <br>
+          </b>A network map of the whole known CRXN (omitting some
+          personal devices)<br>
+          <br>
+          <br>
+          <img src="catch_up_1/6.jpg" alt="Home ethernet switch (where
+            my network stuff begins - from my room)" height="717"
+            width="958"><br>
+          <br>
+          Home ethernet switch (where my network stuff begins - from my
+          room)<br>
+          <br>
+          <br>
+          <div align="left"><br>
+          </div>
+        </div>
+        <div align="center"><img src="catch_up_1/7.jpg" alt="Ethernet
+            coupler" height="751" width="1002"><br>
+        </div>
+        <b><br>
+        </b>
+        <div align="center">Ethernet coupler used to connect the lab's
+          ethernet switch to my room's ethernet switch (as the cable
+          isn't long enough)<br>
+          <br>
+          <br>
+          <img src="catch_up_1/8.jpg" alt="The extension of the switch
+            inside, this is just for more ports on the same ethernet
+            network - that's all - but located in the garage rather so
+            my machines can be connected to it instead of all back to my
+            bedroom's switch which would be messy" height="753"
+            width="1006"><br>
+          <br>
+          The extension of the switch inside, this is just for more
+          ports on the same ethernet network - that's all<br>
+          - but located in the garage rather so my machines can be
+          connected to it instead of all back to my<br>
+          bedroom's switch which would be messy<br>
+          <br>
+          <br>
+          <img src="catch_up_1/9.jpg" alt="Another view of my ethernet
+            switch (I actually got it for free at a &quot;dumpster
+            dive&quot; (computers being sold that were old))"
+            height="734" width="979"><br>
+          <br>
+          Another view of my ethernet switch (I actually got it for free
+          at a "dumpster dive" (computers being sold that were old))<br>
+          <br>
+          <br>
+          <img src="catch_up_1/11.jpg" alt="This is actually my first
+            16-port switch" height="761" width="1015"><br>
+          <br>
+          Haven't populated it all yet but you can see it's already
+          filling up a lot<br>
+          <br>
+          <br>
+          <img src="catch_up_1/12.jpg" alt="The other (the other one is
+            the one above) two switches mentioned in the network
+            topology" height="786" width="1049"><br>
+          <br>
+          The other (the other one is the one above) two switches
+          mentioned in the network topology<br>
+          <br>
+          <br>
+          <img src="catch_up_1/13.jpg" alt="Ethernet switch 3"
+            height="790" width="1054"><br>
+          <br>
+          Ethernet switch 3<br>
+          <br>
+          <br>
+          <img src="catch_up_1/14.jpg" alt="Ethernet switch 2"
+            height="754" width="1006"><br>
+          <br>
+          Ethernet switch 2<br>
+          <div align="left"><br>
+            Now what am I running on CRXN? Well, the next machines you
+            will see, <i>silverfish</i> (<i>bernd</i>), <i>brink</i>,
+            <i>jaco</i> and <i>bester</i> are used for various
+            different things. Currently I run on the network services
+            for public consumption on <i>bester</i>, this includes a
+            KiwiIRC instance for web irc access to BonoboNET, ssh-chat
+            (a shell server where the shell is a chat program), a few
+            matterbridge instances to bridge BonoboNET to what will be a
+            volatile IRC joining (on a few channels), a gitea instance
+            (which I use for git mirroring), a redmine instance (for
+            managing projects and media files for project notes and such
+            type of documents that aren't suitable for a repository). <i>Silverfish
+            </i>or <i>bernd</i> I use for software testing for
+            Butterfly and such with several docker containers, <i>jaco</i>
+            - much of the same. <i>Brink</i>, nice guy, but he ain't
+            doing much right now (I mean damn that thing has a strapped
+            on harddrive using cable ties - you don't get more ghetto
+            than that).<br>
+            <br>
+            <div align="center"><img src="catch_up_1/15.jpg" alt="All of
+                my machines, from left to right - Silverfish (Bernd),
+                Brink, Jaco, Bester" height="652" width="870"><br>
+              <br>
+              All of my machines, from left to right - Silverfish
+              (Bernd), Brink, Jaco, Bester<br>
+              <br>
+              <div align="left">And a few more close ups whereby you can
+                see how well I have labeled everything.<br>
+                <br>
+                <div align="center"><img src="catch_up_1/16.jpg"
+                    alt="Silverfish (Bernd)" height="968" width="1291"><br>
+                  <br>
+                  Silverfish (Bernd) - I wanted more blinky lights on
+                  the CRXN side so I added more ethernet but considering
+                  the way ARP works, one is always useless<br>
+                  and only sends out periodic traffic - I might do some
+                  batman stuff on it though - so no more CRXN for it!<br>
+                  <br>
+                  <br>
+                  <img src="catch_up_1/17.jpg" alt="The other machines"
+                    height="1000" width="1334"><br>
+                  <br>
+                  Brink, Jaco and Bester (sitting in a tree, well, umh a
+                  shelf) - I like this scene very much, not what I just
+                  described<br>
+                  but you know that one meme...<br>
+                  <br>
+                  <br>
+                  <img src="catch_up_1/18.jpg" alt="To power all of
+                    these beasts (albeit not at the same time)"
+                    height="904" width="1206"><br>
+                  <br>
+                  To power all of these beasts (albeit not at the same
+                  time)<br>
+                  <br>
+                  <br>
+                  <img src="catch_up_1/19.jpg" alt="Laptop for managing
+                    the machines indirectly" height="970" width="1294"><br>
+                  <br>
+                  Laptop for managing the machines indirectly<br>
+                  <br>
+                  <br>
+                  <img src="catch_up_1/20.jpg" alt="Monitor for direct
+                    attachment to machines" height="908" width="1211"><br>
+                  <br>
+                  Monitor for direct attachment to machines<br>
+                  <div align="left"><br>
+                    <br>
+                    And that concludes CRXN stuffies! It also concludes
+                    part 1 of this blog as I have written a lot and want
+                    to relax now, so stay tuned for tomorrow evening
+                    when I publish part 2!<br>
+                  </div>
+                  <br>
+                </div>
+              </div>
+              <br>
+            </div>
+          </div>
+          <br>
+        </div>
+        <b><br>
+        </b></div>
+      <br>
+    </div>
+  </body>
+</html>
