@@ -1,7 +1,6 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>
-
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <title>I've been super busy as of late - A quick catch up (Part 2)</title>
   </head>
@@ -19,7 +18,7 @@
       </h3>
       <h1>I've been super busy as of late - A quick catch up (Part 2)<br>
       </h1>
-      <h3>24th July 2020</h3>
+      <h3>25th July 2020</h3>
       <p><br>
       </p>
     </div>
@@ -34,7 +33,7 @@
     <br>
     Now let's move onto the next things!<br>
     <br>
-    <h3>Bester<br>
+    <h3><a href="https://deavmi.github.io/projects/bester">Bester</a><br>
     </h3>
     So I started work on what I see as a more modular XMPP which I call
     Bester. I have written quite a few blog posts on it (look here, here
@@ -60,7 +59,8 @@
     in terms of topologies of Bester daemons and moving messages
     throughout them!<br>
     <br>
-    <h3>Butterfly - electronic mail simplified<br>
+    <h3><a href="https://deavmi.github.io/projects/butterfly">Butterfly</a>
+      - electronic mail simplified <br>
     </h3>
     I don't think I have yet posted much on Butterfly or at all - only
     really on Mastodon! Now I have always wanted to have email but in an
@@ -86,8 +86,47 @@
     aspect but not bundled in anyway and separate - I want to maintain
     the UNIX philosophies - do one thing and do it well!<br>
     <br>
-    <h3>tristanable<br>
+    <h3><a href="https://deavmi.github.io/projects/tristanable">tristanable</a>
+      - tag-based messaging library<br>
     </h3>
-    I don't thi<br>
+    Now for both Bester and Butterfly I want to make things more
+    job-oriented than based around a simple state machine. By this I
+    mean that if I have two jobs, job 1 and job 2, then rather than
+    making it such that I make a request from the client -&gt; server to
+    start job 1 and then await the completion and result from server
+    -&gt; client and then do the same for job 2, I want to submit both
+    jobs, job 1 and then job 2 and as soon as one finishes then I want
+    to receive its result - now one can program this but the thing is
+    that means programming the same thing time and time again for
+    several programs, just like bformat (which you will see in the next
+    section), so I decided to write a library to do this for me.<br>
+    <br>
+    tristanable is for the client side, obviously with worker threads
+    for each job on the server-side this is easy to accomplish without a
+    library - all the library does is listen for incoming results and
+    store them in an array that you can access using functions like
+    `.receive(tag=1)` (where tag is the same concept as job) which, if
+    the result for the tag/job 1 is not in the array it will then loop
+    and check but if it does find it sometime during that loop, or even
+    before the first iteration then the `.receive` function will return
+    immediately - this is the crux of tristanable.<br>
+    <br>
+    <h3><a href="https://github.com/besterprotocol/bformat">bformat</a>
+      - socket encoding/decoding payload-management thing<br>
+    </h3>
+    This library, which should be renamed, basically manages receiving
+    and sending of messages in the bformat format which consists of [
+    &lt;---- 4 bytes (specifying size in little endian encoding)
+    ----&gt; | &lt;---- payload (n bytes) ----&gt; ].<br>
+    <br>
+    I use this in all of my networking projects - at least so far.<br>
+    <br>
+    <br>
+    <h3>And that's a wrap!<br>
+    </h3>
+    I should mention also that I started a <a
+      href="https://video.autizmo.xyz/video-channels/deavmis_shack/videos">PeerTube
+      channel</a> whereby I post computer builds and networking
+    server-ish stuff - so check that out if you will!<br>
   </body>
 </html>
